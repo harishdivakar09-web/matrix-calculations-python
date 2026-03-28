@@ -1,6 +1,6 @@
-import numpy as np
-import sympy as sp
+import sympy as sp #This is pivotal for matrix operations
 
+# Inputting matrix
 matrix = []
 print("Enter each entry for the 4x4 matrix")
 for i in range(4):
@@ -16,8 +16,38 @@ for i in range(4):
         except:
             print("Invalid input. Please try again.")
 
-A_np = np.array(matrix, dtype=object)
-A_sp = sp.Matrix(matrix)
+A = sp.Matrix(matrix)
 
 print("\nMatrix entered: ")
-sp.pprint(A_sp)
+sp.pprint(A) 
+
+
+B = sp.Matrix([0,0])
+
+
+# Picking task to perform
+"\n"
+print("Pick any task: \n1. An eigenvalue of 1 exists for the given matrix\n2. Finding steady state vector \n3. Revising matrix, then comparing steady state vectors \n4. Finding second largest eigenvalue")
+while True:
+   i = input("\nEnter 1, 2, 3, or 4: ")
+   if i not in {"1","2","3","4"}:
+       print ("Invalid input, try again")
+       continue
+   break
+
+"\n"
+# Task 1
+if i == "1":
+    if 1 in A.eigenvals():
+        print ("Matrix A contains an eigenvalue of 0")
+    else:
+        print ("Matrix A does not contain an eigenvalue of 0")
+
+# Task 2
+if i == "2":
+    A = A.applyfunc(sp.nsimplify)
+    B = A-sp.eye(4)
+    S = B.nullspace()
+    sp.pprint(S[0])
+    #To be continued
+
