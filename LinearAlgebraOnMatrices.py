@@ -23,6 +23,8 @@ sp.pprint(A)
 
 
 B = sp.Matrix([0,0])
+steady_1 = None
+steady_2 = None
 
 
 # Picking task to perform
@@ -48,6 +50,42 @@ if i == "2":
     A = A.applyfunc(sp.nsimplify)
     B = A-sp.eye(4)
     S = B.nullspace()
-    sp.pprint(S[0])
-    #To be continued
+    if not S:
+        print ("\nThere is no steady state vector for this matrix")
+    else:
+        v=S[0]
+        steady_1 = v/sum(v)
+        print("\nSteady state vector is: ")
+        sp.pprint(steady_1)
+    
+# Task 3
+if i == "3":
+    while True:
+        i = input("Pick row number to change: ")
+        if i not in {"1","2","3","4"}:
+            print ("Invalid row, try again")
+            continue
+        break
+    while True:
+        j = input("Pick column number: ")
+        if j not in {"1","2","3","4"}:
+            print ("Invalid column, try again")
+            continue
+        break
+    while True:
+        k = input("Type the changed value for that row and column: ")
+        try:
+            k=float(k)
+            if k>=0:
+                break
+            else:
+                print("Invalid input, try again")
+        except (ValueError):
+            print("Invalid input, try again")
+    row = int(i)-1
+    col = int(j)-1
+    val = float(k)
+    #Need to add code for the other change in value
+    A[row,col] = val
+    
 
