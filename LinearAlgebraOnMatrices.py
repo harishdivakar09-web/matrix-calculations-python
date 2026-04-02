@@ -21,15 +21,14 @@ A = sp.Matrix(matrix)
 print("\nMatrix entered: ")
 sp.pprint(A) 
 
-
+#Declaring variables used for each task
 B = sp.Matrix([0,0])
 steady_1 = None
 steady_2 = None
 
 
 # Picking task to perform
-"\n"
-print("Pick any task: \n1. An eigenvalue of 1 exists for the given matrix\n2. Finding steady state vector \n3. Revising matrix, then comparing steady state vectors \n4. Finding second largest eigenvalue")
+print("\nPick any task: \n1. An eigenvalue of 1 exists for the given matrix\n2. Finding steady state vector \n3. Revising matrix, then comparing steady state vectors \n4. Finding second largest eigenvalue")
 while True:
    i = input("\nEnter 1, 2, 3, or 4: ")
    if i not in {"1","2","3","4"}:
@@ -38,7 +37,7 @@ while True:
    break
 
 "\n"
-# Task 1
+# Task 1 - 
 if i == "1":
     if 1 in A.eigenvals():
         print ("Matrix A contains an eigenvalue of 0")
@@ -58,7 +57,7 @@ if i == "2":
         print("\nSteady state vector is: ")
         sp.pprint(steady_1)
     
-# Task 3
+# Task 3 (not verfied yet)
 if i == "3":
     while True:
         i = input("Pick row number to change: ")
@@ -85,7 +84,20 @@ if i == "3":
     row = int(i)-1
     col = int(j)-1
     val = float(k)
-    #Need to add code for the other change in value
+    diff = val-A[row,col]
     A[row,col] = val
-    
-
+    if diff>=0:
+        A[col,col]-=diff
+    else:
+        A[col,col]+=diff
+    A = A.applyfunc(sp.nsimplify)
+    B = A-sp.eye(4)
+    S = B.nullspace()
+    if not S:
+        print ("\nThere is no steady state vector for this matrix")
+    else:
+        v=S[0]
+        steady_2 = v/sum(v)
+        print("\nNew steady state vector is: ")
+        sp.pprint(steady_2)
+#Task 4 
