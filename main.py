@@ -1,33 +1,43 @@
 import numpy as np
 from numpy import linalg as LA
 np.set_printoptions(precision=3, suppress=False)
-print("Enter 4x4 matrix")
-A = np.zeros((4,4))
+print("Enter a column-stochastic 4x4 matrix")
 I = np.eye(4)
 
 #Input
-for i in range(4):
-    while True:
-         row = input(f"Enter 4 numbers for row {i+1}, separated by spaces\n ").strip().split()
-         if len(row)!=4:
-             print("You must enter four numbers\n")
-             continue
+while True:
+    A = np.zeros((4,4))
+    for i in range(4):
+        while True:
+            row = input(f"Enter 4 numbers for row {i+1}, seperated by spaces\n ").strip().split()
+            if len(row)!=4:
+                print("You must enter four numbers\n")
+                continue
+            
+            try:
+                A[i] = [float(x) for x in row]
+                break
+            
+            except ValueError:
+                print("This is not a valid integer\n")
+                continue
+        
+    col_sum = A.sum(axis = 0)
+    if np.all(A>=0) and np.allclose(col_sum,1):
+        break
+        
+    print("This is not column-stochastic. Try again\n")
+              
+    
          
-         try:
-             A[i] = [float(x) for x in row]
-             break
-         
-         except:
-             print("This is not a valid integer\n")
+        
 
-print("This is your 4x4 matrix\n")
+         
+             
+
+print("This is your matrix: ")
 print(A)
-A = np.array([
-    [0.5, 0.2, 0.1, 0.3],
-    [0.2, 0.5, 0.2, 0.2],
-    [0.2, 0.2, 0.6, 0.1],
-    [0.1, 0.1, 0.1, 0.4]
-])
+
 
 
      
@@ -37,7 +47,7 @@ A = np.array([
 while True:
     
     def escape_task():
-     a = input("Press R to return, or Q to exit: ").strip().lower()
+     a = input("\nPress R to return, or Q to exit: ").strip().lower()
      if a == "r":
          return True
      if a == "q":
@@ -72,16 +82,28 @@ while True:
             print(LA.solve(B,b))
         except LA.LinAlgError:
             print("\nThis matrix has no steady state vector")
-        finally:
-            escape_task()
+    
+        if(escape_task()):
+            continue
+        else:
+            break
             
     if i == "3":
-        C = A.__deepcopy__()
-        num = input("\nChoose row number and column number to replace with: ").strip().split()
-        replace = input("\nType the number you want to replace the matrix with: ").strip().split()
-        current = C[num[0]][num[1]]
-        difference = abs(replace-current)
-        if current>replace:
+        C = A.copy()
+        while True:
+            try:
+                num = float(input("\nChoose row number and column number to replace with: ").strip().split())
+                replace = float(input("\nType the number you want to replace with: ").strip().split())
+            except:
+                print("Invalid integer, try again")
+                continue
+            
+            current = C[num[0]][num[1]]
+            difference = abs(replace-current)
+        
+                
+            
+            
             
         
        
