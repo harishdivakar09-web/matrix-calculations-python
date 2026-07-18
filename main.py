@@ -29,20 +29,8 @@ while True:
     print("This is not column-stochastic. Try again\n")
               
     
-         
-        
-
-         
-             
-
 print("This is your matrix: ")
 print(A)
-
-
-
-     
-    
-    
 
 while True:
     
@@ -92,14 +80,44 @@ while True:
         C = A.copy()
         while True:
             try:
-                num = float(input("\nChoose row number and column number to replace with: ").strip().split())
+                num = int(input("\nChoose row number and column number to replace with: ").strip().split())
+                index = [x-1 for x in num]
+                for x in index:
+                    if x<0 or x>3:
+                        print("\nInvalid row or column, try again")
+                        continue
                 replace = float(input("\nType the number you want to replace with: ").strip().split())
+                if replace<0 or replace>1:
+                    print("\nMust replace with a number between 0 and 1, try again")
             except:
-                print("Invalid integer, try again")
+                print("\nInvalid number, try again")
                 continue
-            
+
             current = C[num[0]][num[1]]
+            C[num[0]][num[1]] = replace
             difference = abs(replace-current)
+            if replace > current:
+                C[num[1]][num[1]] = C[num[1]][num[1]] - difference
+            else:
+                C[num[1]][num[1]] = C[num[1]][num[1]] + difference
+            break
+        if escape_task():
+            continue
+        else:
+            break
+    
+    if i == "4":
+        eigenvalues = list(LA.eigvals(A)).sort()
+        print("The second largest eigenvalue is " + eigenvalues[2])
+        if escape_task():
+            continue
+        else:
+            break
+
+            
+
+                
+
         
                 
             
